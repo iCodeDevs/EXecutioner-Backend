@@ -2,3 +2,4 @@
 !.gitignore
 *.lock
 playground
+**/__pycache__/**

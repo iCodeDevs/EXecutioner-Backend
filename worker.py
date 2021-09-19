@@ -1,8 +1,13 @@
+import os
 from executioner_worker import tasks # preloading
 from rq import Connection, Worker
+from redis import Redis
 
-# setup connection (default: localhost:6379/0)
-with Connection():
+redis = None
+if "REDIS_URL" in os.environ:
+    redis = Redis.from_url(os.environ.get("REDIS_URL"))
+
+with Connection(redis):
     qs = ['default']
 
     w = Worker(qs)
