@@ -6,8 +6,8 @@ authors = ["dravog7 <dravog78@gmail.com>"]
 
 [tool.poetry.dependencies]
 python = "^3.8"
-celery = {extras = ["redis"], version = "^5.1.2"}
-pyExecutioner = "^0.0.10"
+rq = "^1.10.0"
+pyExecutioner = "^0.0.13"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"
