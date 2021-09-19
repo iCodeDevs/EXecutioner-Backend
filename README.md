@@ -9,10 +9,10 @@ A worker process to execute code
 - Install dependencies
 
     ```bash
-        poetry install
+    poetry install
     ```
 
-- Install Executioner dependencies (if being used as worker) [here](https://github.com/iCodeDevs/EXecutioner)
+- Install [Executioner](https://github.com/iCodeDevs/EXecutioner) dependencies (if being used as worker)
 
 ## How To Use
 
