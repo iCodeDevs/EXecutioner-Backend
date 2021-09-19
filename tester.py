@@ -12,10 +12,13 @@ if "REDIS_URL" in os.environ:
 
 q = Queue(connection=redis)
 pgm = Program('''
+#include<stdio.h>
 void main(){
-    while(1);
+    int num;
+    scanf("%d",&num);
+    printf("%d",num);
 }''',"C")
-ev = Evaluation(pgm,[TestCase("",""),TestCase("h","he")])
+ev = Evaluation(pgm,[TestCase("12","12"),TestCase("123","123")])
 job = q.enqueue(tasks.execute,ev.to_json_object())
-time.sleep(40)
+time.sleep(15)
 print(job.result)

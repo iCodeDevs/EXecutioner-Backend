@@ -1,14 +1,16 @@
-sudo apt update
-sudo apt install firejail
-sudo apt install python3 python3-pip
+apt update
+apt install -y firejail
+apt install -y python3 python3-pip
 
-sudo apt install gcc # for C
+apt install -y gcc # for C
 
-python3 -m pip install poetry
+# python3 -m pip install poetry
 
-python3 -m poetry config virtualenvs.in-project true
-python3 -m poetry install
+# python3 -m poetry config virtualenvs.in-project false
+# python3 -m poetry install
 
-python3 -m poetry add pytest
+python3 -m pip install -r requirements.txt # for very small instances
+
+python3 -m pip install pytest
 # change based on python version
-python3 -m poetry run pytest .venv/lib/python3.8/site-packages/executioner/
+python3 -m pytest /usr/local/lib/python3.8/dist-packages/executioner/
