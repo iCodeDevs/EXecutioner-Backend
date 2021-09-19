@@ -1,2 +1,3 @@
 rq==1.10.0
 pyExecutioner==0.0.14
+pytest
