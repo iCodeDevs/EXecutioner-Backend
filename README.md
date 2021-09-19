@@ -62,3 +62,11 @@ To shut the instance down
 ```bash
 docker-compose down
 ```
+
+## NOTES
+
+### To apply .env in bash
+
+```bash
+set -o allexport; source .env; set +o allexport
+```

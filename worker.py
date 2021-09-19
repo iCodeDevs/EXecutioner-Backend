@@ -3,7 +3,7 @@ from executioner_worker import tasks # preloading
 from rq import Connection, Worker
 from redis import Redis
 
-redis = None
+redis = Redis()
 if "REDIS_URL" in os.environ:
     redis = Redis.from_url(os.environ.get("REDIS_URL"))
 

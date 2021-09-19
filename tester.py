@@ -6,17 +6,16 @@ from redis import Redis
 from rq import Queue
 import time
 
-redis = None
+redis = Redis()
 if "REDIS_URL" in os.environ:
     redis = Redis.from_url(os.environ.get("REDIS_URL"))
 
 q = Queue(connection=redis)
 pgm = Program('''
-a = 0
-for _ in range(10**9):
-    a +=1
-''',"python3")
+void main(){
+    while(1);
+}''',"C")
 ev = Evaluation(pgm,[TestCase("",""),TestCase("h","he")])
 job = q.enqueue(tasks.execute,ev.to_json_object())
-time.sleep(60)
+time.sleep(40)
 print(job.result)
