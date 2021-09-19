@@ -70,3 +70,9 @@ docker-compose down
 ```bash
 set -o allexport; source .env; set +o allexport
 ```
+
+### Redis URL format in .env
+
+```bash
+REDIS_URL=redis://[:PASSWORD@]HOST[:PORT][/DATABASE]
+```
