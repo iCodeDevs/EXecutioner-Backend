@@ -5,10 +5,3 @@ services:
     image: redis
     ports:
       - "6379:6379"
-  worker:
-    environment: 
-      ENV: dev
-    build:
-      context: .
-      dockerfile: dockerfile
-    network_mode: host
