@@ -38,8 +38,8 @@ from redis import Redis
 from rq import Queue
 import time
 
-// default is localhost:6379
-// be sure to start a redis instance and worker process before trying this out
+# default is localhost:6379
+# be sure to start a redis instance and worker process before trying this out
 conn = Redis(db=0) 
 q = Queue(connection=conn)
 pgm = Program("print('h')","python3")
