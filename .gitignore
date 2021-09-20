@@ -3,3 +3,4 @@
 *.lock
 playground
 **/__pycache__/**
+*.db
