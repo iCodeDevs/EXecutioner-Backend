@@ -1,6 +1,6 @@
-# EXecutioner-worker
+# EXecutioner-Backend
 
-A worker process to execute code
+Backend for executioner
 
 ## Installation
 
@@ -30,51 +30,29 @@ A worker process to execute code
   set -o allexport; source .env; set +o allexport
   ```
 
-## How To Use
+## Components
 
-### As worker
+### Worker
 
-Use the library as a worker process across multiple systems connected to a single redis instance. The redis connection can be configured in worker.py.
+The worker process handles tasks from redis and returns their result after execution.
 
-To start the worker process
+To start the worker
 
 ```bash
-poetry run python worker.py
+poetry run python3 worker.py
 ```
 
-### As client
+### Web server
 
-Import executioner_worker.tasks and enqueue as task to execute it (example given in tester.py)
+The web server provides the web API
 
-```python
-import os
-from executioner_worker import tasks
-from executioner.program import Program
-from executioner.evaluate import Evaluation, TestCase
-from redis import Redis
-from rq import Queue
-import time
+To start the web server
 
-redis = Redis()
-if "REDIS_URL" in os.environ:
-    redis = Redis.from_url(os.environ.get("REDIS_URL"))
-
-q = Queue(connection=redis)
-pgm = Program('''
-#include<stdio.h>
-void main(){
-    int num;
-    scanf("%d",&num);
-    printf("%d",num);
-}''',"C")
-test = TestCase("12")
-job = q.enqueue(tasks.execute,pgm.to_json_object(),test.to_json_object())
-time.sleep(10)
-test = TestCase.from_json_object(job.result)
-print(test.real_output)
+```bash
+poetry 
 ```
 
-### Development
+## Development
 
 Use [docker-compose](https://docs.docker.com/compose/install/) to start a redis instance
 

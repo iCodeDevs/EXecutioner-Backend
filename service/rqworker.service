@@ -10,7 +10,7 @@ Environment=LANG=en_US.UTF-8
 Environment=LC_ALL=en_US.UTF-8
 Environment=LC_LANG=en_US.UTF-8
 EnvironmentFile=/home/azureuser/EXecutioner-worker/.env
-ExecStart=bash /home/azureuser/EXecutioner-worker/service/start_service.sh
+ExecStart=bash /home/azureuser/EXecutioner-worker/service/start_worker.sh
 ExecReload=/bin/kill -s HUP $MAINPID
 ExecStop=/bin/kill -s TERM $MAINPID
 PrivateTmp=true
