@@ -8,11 +8,27 @@ A worker process to execute code
 
 - Install dependencies
 
-    ```bash
-    poetry install
-    ```
+  ```bash
+  poetry install
+  ```
 
 - Install [Executioner](https://github.com/iCodeDevs/EXecutioner) dependencies (if being used as worker)
+
+## Configuration
+
+- create a .env file
+
+  - Redis URL format in .env
+
+  ```bash
+  REDIS_URL=redis://[[USER]:PASSWORD@]HOST[:PORT][/DATABASE]
+  ```
+
+- apply .env in bash
+
+  ```bash
+  set -o allexport; source .env; set +o allexport
+  ```
 
 ## How To Use
 
@@ -31,6 +47,7 @@ poetry run python worker.py
 Import executioner_worker.tasks and enqueue as task to execute it (example given in tester.py)
 
 ```python
+import os
 from executioner_worker import tasks
 from executioner.program import Program
 from executioner.evaluate import Evaluation, TestCase
@@ -38,15 +55,23 @@ from redis import Redis
 from rq import Queue
 import time
 
-# default is localhost:6379
-# be sure to start a redis instance and worker process before trying this out
-conn = Redis(db=0) 
-q = Queue(connection=conn)
-pgm = Program("print('h')","python3")
-ev = Evaluation(pgm,[TestCase("",""),TestCase("h","he")])
-job = q.enqueue(tasks.execute,ev.to_json_object())
-time.sleep(5)
-print(job.result)
+redis = Redis()
+if "REDIS_URL" in os.environ:
+    redis = Redis.from_url(os.environ.get("REDIS_URL"))
+
+q = Queue(connection=redis)
+pgm = Program('''
+#include<stdio.h>
+void main(){
+    int num;
+    scanf("%d",&num);
+    printf("%d",num);
+}''',"C")
+test = TestCase("12")
+job = q.enqueue(tasks.execute,pgm.to_json_object(),test.to_json_object())
+time.sleep(10)
+test = TestCase.from_json_object(job.result)
+print(test.real_output)
 ```
 
 ### Development
@@ -61,18 +86,4 @@ To shut the instance down
 
 ```bash
 docker-compose down
-```
-
-## NOTES
-
-### To apply .env in bash
-
-```bash
-set -o allexport; source .env; set +o allexport
-```
-
-### Redis URL format in .env
-
-```bash
-REDIS_URL=redis://[:PASSWORD@]HOST[:PORT][/DATABASE]
 ```

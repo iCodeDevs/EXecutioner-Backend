@@ -18,7 +18,9 @@ void main(){
     scanf("%d",&num);
     printf("%d",num);
 }''',"C")
-ev = Evaluation(pgm,[TestCase("12","12"),TestCase("123","123")])
-job = q.enqueue(tasks.execute,ev.to_json_object())
-time.sleep(15)
-print(job.result)
+test = TestCase("-12492294823928402840294820482")
+
+job = q.enqueue(tasks.execute,pgm.to_json_object(),test.to_json_object())
+time.sleep(1)
+test = TestCase.from_json_object(job.result)
+print(test.error,test.real_output)

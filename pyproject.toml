@@ -7,7 +7,7 @@ authors = ["dravog7 <dravog78@gmail.com>"]
 [tool.poetry.dependencies]
 python = "^3.8"
 rq = "^1.10.0"
-pyExecutioner = "^0.0.14"
+pyExecutioner = "^0.0.15"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"
