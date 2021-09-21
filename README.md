@@ -18,16 +18,23 @@ Backend for executioner
 
 - create a .env file
 
-  - Redis URL format in .env
-
   ```bash
   REDIS_URL=redis://[[USER]:PASSWORD@]HOST[:PORT][/DATABASE]
+  RQ_DASHBOARD_REDIS_URL=redis://[[USER]:PASSWORD@]HOST[:PORT][/DATABASE]
+  RQ_DASHBOARD_USERNAME=rq
+  RQ_DASHBOARD_PASSWORD=password
   ```
 
 - apply .env in bash
 
   ```bash
   set -o allexport; source .env; set +o allexport
+  ```
+
+- apply migrations
+
+  ```bash
+  poetry run alembic upgrade head
   ```
 
 ## Components
@@ -49,7 +56,7 @@ The web server provides the web API
 To start the web server
 
 ```bash
-poetry 
+poetry run uvicorn app.main:app --reload
 ```
 
 ## Development
