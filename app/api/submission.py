@@ -23,7 +23,6 @@ async def run_program(websocket: WebSocket, queue: Queue, program: str, language
 async def websocket_endpoint(websocket: WebSocket, queue: Queue = Depends(get_queue)):
     await websocket.accept()
     await websocket.send_json({"command": "welcome"})
-    loop = asyncio.get_event_loop()
     while True:
         data = await websocket.receive_json()
         if "id" not in data:
@@ -32,8 +31,7 @@ async def websocket_endpoint(websocket: WebSocket, queue: Queue = Depends(get_qu
             if ("program" not in data) or ("language" not in data):
                 await websocket.send_json({"command": "error", "text": "invalid execute command"})
                 continue
-            loop.create_task(
-                run_program(
+            await run_program(
                     websocket,
                     queue,
                     data["program"],
@@ -41,4 +39,3 @@ async def websocket_endpoint(websocket: WebSocket, queue: Queue = Depends(get_qu
                     data.get("input", ""),
                     data["id"]
                 )
-            )
