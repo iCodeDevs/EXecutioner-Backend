@@ -20,9 +20,6 @@ Backend for executioner
 
   ```bash
   REDIS_URL=redis://[[USER]:PASSWORD@]HOST[:PORT][/DATABASE]
-  RQ_DASHBOARD_REDIS_URL=redis://[[USER]:PASSWORD@]HOST[:PORT][/DATABASE]
-  RQ_DASHBOARD_USERNAME=rq
-  RQ_DASHBOARD_PASSWORD=password
   ```
 
 - apply .env in bash
